@@ -3,37 +3,37 @@ from django.utils import timezone
 from .models import Blog
 
 def home(request):
-    빈칸 = Blog.objects
-    return render(request, 'home.html', {"posts": 빈칸})
+    blogs = Blog.objects
+    return render(request, 'home.html', {'posts': blogs})
 
-def detail(request, a):
-    빈칸 = get_object_or_404(Blog, pk=빈칸)
-    return render(request, 'detail.html', {빈칸: post})
+def detail(request, blog_id):
+    post = get_object_or_404(Blog, pk=blog_id)
+    return render(request, 'detail.html', {'post': post})
 
 def new(request):
     return render(request, 'new.html')
 
 def create(request):
     blog = Blog()
-    blog.title = request.POST[빈칸]
-    blog.body = request.POST[빈칸]
+    blog.title = request.POST['title']
+    blog.body = request.POST['body']
     blog.pub_date = timezone.datetime.now()
     blog.save()
     return redirect('/blog/'+str(blog.id))
 
-def delete(request, b):
-    destroy = get_object_or_404(Blog, pk=빈칸)
+def delete(request, blog_id):
+    destroy = get_object_or_404(Blog, pk=blog_id)
     destroy.delete()
     return redirect('home')
 
-def update(request, c):
-    빈칸 = get_object_or_404(Blog, pk=빈칸)
-    return render(request, 'update.html', {빈칸: text})
+def update(request, blog_id):
+    text = get_object_or_404(Blog, pk=blog_id)
+    return render(request, 'update.html', {'blog': text})
 
-def edit(request, d):
-    edit = Blog.objects.get(pk=빈칸)
-    edit.title = request.POST[빈칸]
-    edit.body = request.POST[빈칸]
+def edit(request, blog_id):
+    edit = Blog.objects.get(pk=blog_id)
+    edit.title = request.POST['title']
+    edit.body = request.POST['body']
     edit.pub_date = timezone.datetime.now()
     edit.save()
     return redirect('home')
